@@ -20,7 +20,6 @@ Thread::Thread(bool isDetached) :
 }
 
 void* Thread::startThreadRunnable(void *pVoid) {
-// thread start function when a Runnable is involved
 	Thread *runnableThread = static_cast<Thread*>(pVoid);
 	assert(runnableThread);
 	runnableThread->result = runnableThread->runnable->run();
@@ -29,7 +28,6 @@ void* Thread::startThreadRunnable(void *pVoid) {
 }
 
 void* Thread::startThread(void *pVoid) {
-// thread start function when no Runnable is involved
 	Thread *aThread = static_cast<Thread*>(pVoid);
 	assert(aThread);
 	aThread->result = aThread->run();
@@ -41,14 +39,12 @@ Thread::~Thread() {
 }
 
 void Thread::start() {
-// initialize attribute object
 	int status = pthread_attr_init(&threadAttribute);
 	if (status) {
 		printError("pthread_attr_init failed at", status, __FILE__, __LINE__);
 		exit(status);
 	}
 
-// set the scheduling scope attribute
 	status = pthread_attr_setscope(&threadAttribute, PTHREAD_SCOPE_SYSTEM);
 	if (status) {
 		printError("pthread_attr_setscope failed at", status,
@@ -72,7 +68,6 @@ void Thread::start() {
 			}
 		}
 	} else {
-// set the detachstate attribute to detached
 		status = pthread_attr_setdetachstate(&threadAttribute, PTHREAD_CREATE_DETACHED);
 		if (status) {
 			printError("pthread_attr_setdetachstate failed at", status,
@@ -104,9 +99,7 @@ void Thread::start() {
 }
 
 void* Thread::join() {
-// A thread calling T.join() waits until thread T completes.
 	int status = pthread_join(PthreadThreadID, NULL);
-// result was already saved by thread start function
 	if (status) {
 		printError("pthread_join failed at", status,
 		__FILE__, __LINE__);
@@ -116,7 +109,6 @@ void* Thread::join() {
 }
 
 void Thread::setCompleted() {
-// completion handled by pthread_join()
 }
 
 void Thread::printError(char *msg, int status, char *fileName, int lineNumber) {
