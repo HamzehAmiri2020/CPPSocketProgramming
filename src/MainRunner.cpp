@@ -6,9 +6,11 @@
  */
 
 #include <iostream>
+#include "threadcpp/ProcessOne.h"
 
 int main(int argc, char **argv) {
-
+	ProcessOne p1;
+	p1.start();
 }
 
 
