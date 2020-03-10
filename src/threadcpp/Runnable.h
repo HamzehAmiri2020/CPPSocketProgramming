@@ -14,6 +14,4 @@ public:
 	virtual ~Runnable() = 0;
 };
 
-Runnable::~Runnable(){};
-
 #endif /* THREADCPP_RUNNABLE_H_ */
